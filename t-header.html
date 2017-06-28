@@ -1,11 +1,20 @@
 <!-- <link rel="import" href="../polymer/polymer.html"> -->
 <link rel="import" href="../polymer/polymer.html">
-<link rel="import" href="../paper-header-panel/paper-header-panel.html">
-<link rel="import" href="../paper-toolbar/paper-toolbar.html">
+
+<!--<link rel="import" href="../paper-header-panel/paper-header-panel.html">
+<link rel="import" href="../paper-toolbar/paper-toolbar.html">-->
+
+<link rel="import" href="../app-layout/app-header/app-header.html">
+<link rel="import" href="../app-layout/app-toolbar/app-toolbar.html">
+<link rel="import" href="../app-layout/app-drawer/app-drawer.html">
+
 <link rel="import" href="../paper-button/paper-button.html">
 <link rel="import" href="../paper-tabs/paper-tabs.html">
 <link rel="import" href="../paper-tabs/paper-tab.html">
-<link rel="import" href="../iron-icon/iron-icon.html">
+
+ <link rel="import" href="../neon-animation/web-animations.html">
+
+
 <link rel="import" href="../iron-media-query/iron-media-query.html">
 <link rel="import" href="../paper-dropdown-menu/paper-dropdown-menu.html">
 <link rel="import" href="../paper-listbox/paper-listbox.html">
@@ -13,7 +22,9 @@
 <link rel="import" href="../paper-menu-button/paper-menu-button.html">
 <link rel="import" href="../paper-item/paper-icon-item.html">
 <link rel="import" href="../paper-item/paper-item.html">
-<link rel="import" href="../paper-drawer-panel/paper-drawer-panel.html">
+<!--<link rel="import" href="../paper-drawer-panel/paper-drawer-panel.html">-->
+<link rel="import" href="../iron-icon/iron-icon.html">
+<link rel="import" href="../iron-icons/iron-icons.html">
 <link rel="import" href="../iron-icons/maps-icons.html">
 <link rel="import" href="../iron-icons/communication-icons.html">
 <link rel="import" href="../iron-flex-layout/iron-flex-layout-classes.html">
@@ -77,8 +88,8 @@
               <div hidden$="[[!item.isIconMenu]]">
                 <iron-icon hidden$="[[_notDesktop]]" class="flag" src="[[_getCurrentIcon(item.options, item.selectedItem)]]"></iron-icon></div>
               <div>
-                <paper-dropdown-menu hidden$="[[_hideIfResponsiveScreenAndIconMenu(_notDesktop, item.isIconMenu)]]" no-label-float class$="top-end-menu [[_getDropdownClasses(item.isIconMenu)]]" on-iron-select="_topEndMenuChanged" >
-                  <paper-listbox  class="dropdown-content"  selected="{{ item.selectedItem }}">
+                <paper-dropdown-menu  hidden$="[[_hideIfResponsiveScreenAndIconMenu(_notDesktop, item.isIconMenu)]]" no-label-float class$="top-end-menu [[_getDropdownClasses(item.isIconMenu)]]" on-iron-select="_topEndMenuChanged" >
+                  <paper-listbox slot="dropdown-content"  class="dropdown-content"  selected="{{ item.selectedItem }}">
                     <template is="dom-repeat" items="[[item.options]]" as="option">
                       <template is="dom-if" if="[[item.isIconMenu]]">
                         <paper-item data-icon$="[[option.icon]]" data-label$="[[option.value]]">
@@ -152,13 +163,14 @@
 
       </div>
     </div>
-    <paper-header-panel class="flex paper-header-panel">
-      <paper-toolbar class="menu-content" >
+    <app-header class="flex paper-header-panel">
+      <app-toolbar class="menu-content" >
         <div>
-          <iron-icon class="icon" icon="menu" on-tap="_openDrawer" hidden$="[[!_isMobile]]"></iron-icon>
-        <paper-button class="logo"  on-tap="_logoTapped">
-          <img class="logo" src="[[data.logo.imageUrl]]" />
-        </paper-button>
+          <iron-icon class="icon" icon="icons:menu" on-tap="_openDrawer" hidden$="[[!_isMobile]]"></iron-icon>
+          
+          <paper-button class="logo"  on-tap="_logoTapped">
+            <img class="logo" src="[[data.logo.imageUrl]]" />
+          </paper-button>
         </div>
 
         <template is="dom-if" if="[[_containsMoreThanZeroItems(data.primaryMenu)]]">
@@ -182,10 +194,10 @@
           </template>
 
         </div>
-      </paper-toolbar>
-    </paper-header-panel>
+      </app-toolbar>
+    </app-header>
 
-    <paper-drawer-panel disable-edge-swipe id="drawer" hidden$="[[!_isMobile]]" drawer>
+    <app-drawer disable-edge-swipe id="drawer" hidden$="[[!_isMobile]]" drawer>
       <div drawer class="drawer">
         <iron-selector selected="{{data.primaryMenu.selectedIndex}}"  on-iron-select="_primaryMenuChanged">
           <template is="dom-repeat" items="[[data.primaryMenu.items]]">
@@ -202,8 +214,8 @@
             <div class="flex">[[item.label]]</div>
             <div class="end end-justified">
               <template is="dom-if" if="[[!item.isIconMenu]]">
-                <paper-dropdown-menu dynamic-align on-iron-select="_topEndMenuChanged" no-label-float class$="[[ _getDropdownClasses(item.isIconMenu)]]">
-                  <paper-listbox class="dropdown-content" selected="{{ item.selectedItem }}">
+                <paper-dropdown-menu  dynamic-align on-iron-select="_topEndMenuChanged" no-label-float class$="[[ _getDropdownClasses(item.isIconMenu)]]">
+                  <paper-listbox slot="dropdown-content" class="dropdown-content" selected="{{ item.selectedItem }}">
                     <template is="dom-repeat" items="[[item.options]]" as="option" selected-item-label="label">
                       <paper-item label="[[option.value]]" data-label$="[[option.value]]" >[[_getDropdownLabel(option.value, option.title)]]
                       </paper-item>
@@ -227,7 +239,7 @@
         </template>
 
       </div>
-    </paper-drawer-panel>
+    </app-drawer>
   </template>
 
   <script>
@@ -331,7 +343,7 @@ Polymer({
       this.set('data.primaryMenu.selectedIndex', detail);
     else{
       this._tabChanged(null, e.target.selected);
-      this.$.drawer.closeDrawer();
+      this.$.drawer.close();
     }
   },
 
@@ -363,11 +375,11 @@ Polymer({
 
   _mainToolbarItemsTapped: function(e){
     this.fire('t-header-main-toolbar-tapped', e.model.item );
-    this.$.drawer.closeDrawer();
+    this.$.drawer.close();
   },
 
   _openDrawer: function(e){
-    this.$.drawer.openDrawer();
+    this.$.drawer.open();
   },
 
   _getDropdownLabel: function(title, value){

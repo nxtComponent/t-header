@@ -25,6 +25,7 @@
 
   paper-button{
     font-weight: normal !important;
+    font-size: 12px;
   }
   paper-item{
     font-size: 14px;
@@ -46,7 +47,7 @@
   };
 }
 
-paper-toolbar{
+app-toolbar{
   padding:0;
 }
 
@@ -278,8 +279,8 @@ a{
     .menu-content{
       margin: 0 ;
     }
-    paper-drawer-panel {
-      --paper-drawer-panel-left-drawer-container: {
+    app-drawer {
+      --app-drawer-content-container: {
         background: var(--t-header-drawer-bg, #283593);
         color: var(--t-header-color, #a9afdf);
       };
@@ -298,7 +299,7 @@ a{
       z-index: 4;
     }
 
-    paper-header-panel{
+    app-header{
       z-index: 2;
     }
 

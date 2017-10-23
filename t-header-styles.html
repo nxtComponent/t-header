@@ -1,8 +1,8 @@
 <dom-module id="t-header-styles">
   <template>
     <style>
-       :root {
-        end-justified --paper-font-common-base: {
+      :root {
+        --paper-font-common-base: {
           font-family: "Roboto";
         }
         ;
@@ -32,6 +32,8 @@
 
       paper-item {
         font-size: 14px;
+        min-height: 35px;
+        cursor: pointer;
       }
 
       :host {
@@ -54,11 +56,6 @@
 
       app-toolbar {
         padding: 0;
-      }
-
-      .user-section-content {
-        /* max-width: 400px; */
-        /* max-height: 400px; */
       }
 
       .flag {
@@ -110,10 +107,6 @@
         width: 50px;
       }
 
-      .right-topbar>div {
-        /* margin-right: 20px; */
-      }
-
       .signup-section {
         margin-right: 0 !important;
       }
@@ -154,9 +147,7 @@
       }
 
       .secondary-menu {
-        /* position: absolute; */
         float: right;
-        /* right: 0; */
       }
 
       .notification-count {
@@ -197,8 +188,6 @@
         /* line-height: 60px; */
       }
 
-      .right-text {}
-
       .tabs {
         height: 100%;
         margin: 30px;
@@ -217,7 +206,6 @@
       }
 
       .primary-menu {
-        /* width: 600px; */
         font-size: 12px;
         margin-top: 12px;
         color: var(--t-header-color, #a9afdf);
